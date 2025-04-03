@@ -1,0 +1,22 @@
+name: Telegram Bot animalsay
+
+on:
+  workflow_dispatch:  # Это разрешает ручной запуск!
+  schedule:
+    - cron: '0 0 1 1 *'  # Фиктивное расписание (раз в год)
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run the bot
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: python bot.py
